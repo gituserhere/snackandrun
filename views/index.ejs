@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How much to run heh</title>
+    <link rel="stylesheet" href="styles/main.css">
+    
+</head>
+<body>
+    
+    <h1> How far to run to burn that off? </h1>
+
+    <div class = "SnackSelection"> 
+    <form action="/submit" method="POST">
+        <label for="SnackSelection">What are you craving? </label>
+        <br><br>
+        <select id="SnackSelection" name="SnackSelection">
+          <option value="food1">Food 1</option>
+          <option value="food2">Food 2</option>
+          <option value="food3">Food 3</option>
+        </select>
+        <input type="submit" value="Submit">
+    </form>
+    </div>
+
+    <br>
+
+    <div class = "SnackSelectionResult">
+    <% if (locals.distance || locals.similar){ %>
+        <h2>You selected <%= snack %>. If you eat that, you'll need to run 
+            <h1><%= distance %> km </h1>
+            <h2>to burn those calories off! </h2>
+    </div>
+
+ 
+    <div class = "VoteSelection">
+    <h2> Would you still: </h2>
+        <form action="/submitvote" method="POST">
+            <label> <input type="radio" name="vote" value="eat"> Eat it anyway! </label>
+            <label> <input type="radio" name="vote" value="avoid"> Reluctantly avoid </label>
+            <input type="hidden" name="snack" value=<%= snack %> >
+            <br><br>
+            <input type="submit" name ="submitvote" value="vote">
+        </form>
+        <h4>(vote to see how others selected!) </h4>
+    <% } %> 
+    </div>
+
+    <div class="VoteSelectionResult">
+    <%if (locals.similar){ %>
+        <h2> <%= similar %>% of users made the same choice as you! </h2>
+    <%}%>
+    </div>
+
+</body>
+</html>
