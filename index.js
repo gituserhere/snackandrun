@@ -41,8 +41,24 @@ app.use(async (req, res, next) => {
 });
 
 
-app.get("/", (req, res) => {
-    res.render("index.ejs");
+app.get("/", async (req, res) => {
+    let foodlist = [];
+
+    try {
+      const collection = req.db.collection("Snacks_and_calories"); 
+      const document =  await collection.find({}, { projection: { _id: 0, name: 1 } }).toArray();
+      foodlist = document.map((doc)=>doc.name);
+      console.log(foodlist);
+      if (foodlist){
+        res.render("index.ejs", {foodlist: foodlist});
+      } else{
+        res.status(500).send("Item not found");
+      }
+      
+    } catch (error) {
+      console.error("Error:", error);
+      res.status(500).send("An error occurred while fetching data.");
+    } 
 });
 
 
@@ -72,7 +88,9 @@ app.post('/submit', async (req, res) => {
 
 app.post('/submitvote', async (req, res) => {
   const vote = req.body.vote;
-  const snack = req.body.snack;
+  let snack = req.body.snack;
+  snack = "Peanut Butter Waffle";
+  console.log(req.body);
   let distance; 
   console.log(vote, snack);
 
@@ -85,7 +103,7 @@ app.post('/submitvote', async (req, res) => {
        document =  await collection.updateOne({"name":snack}, {$inc: {avoid:1}}); 
     }
     document = await collection.findOne({"name":snack}); 
-    console.log(document);
+    console.log("hello here", document);
     if (document){
       const eat = document.eat;
       const avoid = document.avoid;
@@ -94,7 +112,7 @@ app.post('/submitvote', async (req, res) => {
       if (vote ==="eat"){similar = eat/(eat+avoid)} else {similar = avoid / (eat+avoid)}
       similar = Math.round(similar*100);
       console.log(similar);
-      res.render("index.ejs", {similar: similar, snack: snack, distance: distance});
+      res.render("index.ejs", {similar: similar, snack: snack, distance: distance, vote:vote});
     } else{
       res.status(500).send("Item not found");
     }
@@ -105,6 +123,9 @@ app.post('/submitvote', async (req, res) => {
   } 
 });
 
+app.post("/home", async(req,res)=>{
+  res.render("index.ejs");
+})
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
