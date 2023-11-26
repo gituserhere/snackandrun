@@ -9,28 +9,65 @@ body {
   align-items: center;
   justify-content: center;
   height: 100vh;
-  background-color: #f5f5f5; /* Lighter gray background */
+  background-color: #FFFFF2;
 }
 
-h1 {
-  margin-bottom: 20px;
-  color: #4285f4; /* Google Blue */
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  height: 80px; /* Adjust the height as needed */
+  padding: 20px;
+  z-index: 0; /* Move the background image to the back */
+  overflow: hidden; /* Ensure the pseudo-element doesn't overflow */
+  background-color: rgba(255, 255, 255, 0.3); /* Background color with desired opacity */
+}
+
+.header::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("../pictures/snacks_header.jpg");
+  opacity: 0.3; /* Adjust the opacity of the background image */
+  z-index: -1; /* Move the background image to the back */
+}
+
+.title_header h1 {
+  text-align: center;
+  color: rgba(48, 43, 25, 1);
+  font-size: 2em;
+  z-index: 1; /* Bring the h1 to the front */
 }
 
 .SnackSelection,
 .VoteSelection {
+  position: relative;
   text-align: center;
-  background-color: #ffffff; /* White background */
-  padding: 20px;
+  background-color: #faa873;
+  padding: 10px;
   border-radius: 10px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle box shadow */
-  margin: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin: 20px;
+  width: 80%;
+  color: #302B19;
+  
 }
 
 .SnackSelectionResult,
 .VoteSelectionResult {
   text-align: center;
-  margin-top: -20px;
+  margin-top: 20px;
+  background-color: #FFD9A4;
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 80%;
+  color: #302B19;
 }
 
 form {
@@ -38,9 +75,9 @@ form {
 }
 
 input[type="submit"] {
-  background-color: #4285f4; /* Google Blue */
-  color: #ffffff; /* White text */
-  padding: 12px 24px;
+  background-color: #FF8565;
+  color: #302B19;
+  padding: 10px 20px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -48,11 +85,21 @@ input[type="submit"] {
 }
 
 input[type="submit"]:hover {
-  background-color: #3171e0; /* Darker Google Blue on hover */
+  background-color: #F77E88;
 }
 
 input[type="radio"] {
   margin-right: 5px;
+}
+
+img {
+  padding: 20px;
+  width: 350px;
+  height: 250px;
+  mask-image: linear-gradient(to bottom, transparent, #faa873);
+  border-radius: 5px;
+  object-fit: cover; /* Crop the image to cover the container */
+  object-position: center center; /* Center the cropped image */
 }
 
 .hidden {

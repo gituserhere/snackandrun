@@ -48,7 +48,7 @@ app.get("/", async (req, res) => {
       const collection = req.db.collection("Snacks_and_calories"); 
       const document =  await collection.find({}, { projection: { _id: 0, name: 1 } }).toArray();
       foodlist = document.map((doc)=>doc.name);
-      console.log(foodlist);
+      //console.log(foodlist);
       if (foodlist){
         res.render("index.ejs", {foodlist: foodlist});
       } else{
@@ -67,12 +67,12 @@ const calories_per_km = 60;
 app.post('/submit', async (req, res) => {
     const snack = req.body.SnackSelection;
     let distance = 3; 
-    console.log(snack);
+    //console.log(snack);
 
     try {
       const collection = req.db.collection("Snacks_and_calories"); 
       const document =  await collection.findOne({"name":snack});  
-      console.log(document);
+      //console.log(document);
       if (document){
         distance = Math.round(document.calories/calories_per_km);
         res.render("index.ejs", {snack: snack, distance: distance});
@@ -90,9 +90,9 @@ app.post('/submitvote', async (req, res) => {
   const vote = req.body.vote;
   let snack = req.body.snack;
   snack = "Peanut Butter Waffle";
-  console.log(req.body);
+  //console.log(req.body);
   let distance; 
-  console.log(vote, snack);
+  //console.log(vote, snack);
 
   try {
     const collection = req.db.collection("Snacks_and_calories"); 
@@ -103,7 +103,7 @@ app.post('/submitvote', async (req, res) => {
        document =  await collection.updateOne({"name":snack}, {$inc: {avoid:1}}); 
     }
     document = await collection.findOne({"name":snack}); 
-    console.log("hello here", document);
+    //console.log("hello here", document);
     if (document){
       const eat = document.eat;
       const avoid = document.avoid;
@@ -111,7 +111,7 @@ app.post('/submitvote', async (req, res) => {
       let similar;
       if (vote ==="eat"){similar = eat/(eat+avoid)} else {similar = avoid / (eat+avoid)}
       similar = Math.round(similar*100);
-      console.log(similar);
+      //console.log(similar);
       res.render("index.ejs", {similar: similar, snack: snack, distance: distance, vote:vote});
     } else{
       res.status(500).send("Item not found");

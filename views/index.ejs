@@ -10,6 +10,7 @@
 
     gtag('config', 'G-JXK8TX8LYY');
     </script>
+    <script src="script.js"></script>
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,13 +20,15 @@
 </head>
 <body>
     
-    <h1> How far to run to burn that off? </h1>
-
+    <div class="header">
+        <h1 class="title_header"> How far to run to burn that off? </h1>
+    </div>
+    
     <div class = "SnackSelection    <% if (locals.distance) { %> hidden <% } %> "> 
     <form action="/submit" method="POST">
         <label for="SnackSelection">What are you craving? </label>
         <br><br>
-        <select id="SnackSelection" name="SnackSelection">
+        <select id="SnackSelection" name="SnackSelection" onclick="previewImage()">
         
             <% if(locals.foodlist){ %>
             <% foodlist.forEach(function(foodItem) { %>
@@ -33,14 +36,19 @@
             <%}); %>
             <%}%>
         </select>
+        
+        <div id="imagePreview" >
+            <img src="pictures/peanut_butter_waffle.jpg" alt="Curry Puff" id="snackImage" >
+        </div>
         <input type="submit" value="Submit">
     </form>
     </div>
 
     <br>
 
-    <div class = "SnackSelectionResult">
+    
     <% if (locals.distance || locals.similar){ %>
+    <div class = "SnackSelectionResult">
         <h2>You selected <%= snack %>. If you eat that, you'll need to run 
             <h1><%= distance %> km </h1>
             <h2>to burn those calories off! </h2>
@@ -49,27 +57,29 @@
  
     <div class = "VoteSelection <% if (locals.similar) { %> hidden <% } %> ">
     <h2> Would you still: </h2>
-        <form action="/submitvote" method="POST">
+        <h3><form action="/submitvote" method="POST">
             <label> <input type="radio" name="vote" value="eat"> Eat it anyway! </label>
             <label> <input type="radio" name="vote" value="avoid"> Reluctantly avoid </label>
             <input type="hidden" name="snack" value="<%= snack %>" >
             <br><br>
             <input type="submit" name ="submitvote" value="vote">
         </form> 
-        <h4>(vote to see how others selected!) </h4>
-    <% } %> 
+        (vote to see how others selected!) </h3>
     </div>
+    <% } %> 
+    
 
-    <div class="VoteSelectionResult">
+    
     <%if (locals.similar){ %>
+    <div class="VoteSelectionResult">
         <h2> You selected <%=vote %>! <%= similar %>% of users made the same choice as you! </h2>
 
         <form action="/" method="GET">
             <input type="submit" name ="home" value="Try again">
         </form> 
-
-    <%}%>
     </div>
+    <%}%>
+    
 
 </body>
 </html>
