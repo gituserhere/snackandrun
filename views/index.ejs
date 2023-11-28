@@ -28,7 +28,7 @@
     <form action="/submit" method="POST">
         <label for="SnackSelection">What are you craving? </label>
         <br><br>
-        <select id="SnackSelection" name="SnackSelection" onclick="previewImage()">
+        <select id="SnackSelection" name="SnackSelection" onchange="previewImage()">
         
             <% if(locals.foodlist){ %>
             <% foodlist.forEach(function(foodItem) { %>
