@@ -62,7 +62,7 @@ app.get("/", async (req, res) => {
 });
 
 
-const calories_per_km = 60;
+const calories_per_km = 70;
 
 app.post('/submit', async (req, res) => {
     const snack = req.body.SnackSelection;
@@ -125,6 +125,10 @@ app.post('/submitvote', async (req, res) => {
 
 app.post("/home", async(req,res)=>{
   res.render("index.ejs");
+})
+
+app.get("/about", async(req,res)=>{
+  res.render("about.ejs");
 })
 
 app.listen(port, () => {
