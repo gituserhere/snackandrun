@@ -89,7 +89,7 @@ app.post('/submit', async (req, res) => {
 app.post('/submitvote', async (req, res) => {
   const vote = req.body.vote;
   let snack = req.body.snack;
-  snack = "Peanut Butter Waffle";
+  //snack = "Peanut Butter Waffle";
   //console.log(req.body);
   let distance; 
   //console.log(vote, snack);
